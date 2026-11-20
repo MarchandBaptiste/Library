@@ -11,7 +11,8 @@
  * Si aucun livre n'est trouvé, on affiche une erreur 404
  * Sinon, on affiche le livre.
  */
-
+// Appelle des constantes
+require_once __DIR__ . '/config/constants.php';
 /**
  * On affiche la page
  */
