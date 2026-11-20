@@ -46,8 +46,7 @@ $books = $stmt->fetchAll();
         </div>
         <div class="book-card__footer">
             <a href="book.php?id=<?= $book['id'] ?>">En savoir plus</a>
-            <form id="form-<?= $book['id'] ?>" action="delete-book.php" method="post">
-                <input type="hidden" name="id" value="<?= $book['id'] ?>">
+            <form action="utils/delete-book.php" method="post"> <input type="hidden" name="id" value="<?= $book['id'] ?>">
                 <button>Supprimer</button>
             </form>
         </div>
