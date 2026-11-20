@@ -13,10 +13,8 @@
  * - Le mode de récupération des données par défault (tableau associatif).
  */
 
-$pdo = new PDO('sqlite:' . __DIR__ . '\database.sqlite', null, null, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+require_once __DIR__ . '/source/db_connect.php';
+$pdo = db();
 
 /**
  * 2. On récupère la liste des livres.
