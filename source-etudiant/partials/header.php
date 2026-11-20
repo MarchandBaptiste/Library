@@ -13,7 +13,7 @@ $pdo = db();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
     <link rel="stylesheet" href="./assets/style/css/style.css">
-      <script src="./assets/js/script.js" defer></script>
+    <script src="./assets/js/script.js" defer></script>
     <script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="./assets/img/open-book.svg" />
 </head>

@@ -11,7 +11,8 @@
  * Si aucun livre n'est trouvé, on affiche une erreur 404
  * Sinon, on supprime le livre et on fait une redirection vers le catalogue.
  */
-
+// Appelle des constantes
+require_once __DIR__ . '/../config/constants.php';
 /**
  * 1. On récupère l'id du post
  */
