@@ -37,10 +37,8 @@ if (!$book_id) {
  * - Le mode de récupération des données par défault (tableau associatif).
  */
 
-$pdo = new PDO('mysql:dbname=library;host=localhost;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+require_once __DIR__ . '/../helpers/db_connect.php';
+$pdo = db();
 
 /**
  * 2. On récupère le livre.
@@ -59,5 +57,5 @@ $stmt->execute([$book_id]);
  * On redirige vers le catalogue de livres
  */
 
-header('Location: index.php');
+header('Location: ../index.php');
 exit();
