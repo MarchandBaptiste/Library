@@ -8,7 +8,7 @@
 
 /**
  * On affiche la page
-*/
+ */
 $title = 'Accueil';
 /**
  * 1. Connexion à une base données mysql avec PDO.
@@ -61,12 +61,7 @@ $books = $stmt->fetchAll();
         </div>
     </div>
 <?php endforeach; ?>
-</main>
-<footer class="footer">
-    <p>&copy;<?= date('Y') ?></p>
-    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
-            href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-</footer>
+<?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
 <script>
     // on attend le chargement du DOM avec d'exécuter le code js
     window.addEventListener('DOMContentLoaded', function() {
