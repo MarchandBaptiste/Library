@@ -12,10 +12,14 @@
  * - Le mode d'erreur exception : permet de léver des exceptions lorsqu'une erreur sql est rencontrée.
  * - Le mode de récupération des données par défault (tableau associatif).
  */
+/**
+ * On affiche la page
+ */
+$title = 'Accueil';
 
-require_once __DIR__ . '/source/db_connect.php';
-$pdo = db();
-
+$heading = 'Catalogue des livres';
+define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']);
+include_once DOCUMENT_ROOT . '/partials/header.php';
 /**
  * 2. On récupère la liste des livres.
  */
@@ -29,92 +33,65 @@ $stmt = $pdo->query('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`auth
 $books = $stmt->fetchAll();
 
 
-/**
- * On affiche la page
- */
-$title = 'Accueil';
-
-$heading = 'Catalogue des livres';
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="icon" type="image/png" href="./assets/img/open-book.svg" />
-</head>
-
-<body>
-    <header class="header">
-        <div class="header__container">
-            <a href="index.php"><img src="./assets/img/open-book.svg" alt="logo livre"></a>
-            <h1><?= $heading ?></h1>
+<?php foreach ($books as $book): ?>
+    <div class="book-card">
+        <h2 class="book-card__heading">
+            <?= $book['title'] ?>
+        </h2>
+        <!-- on crée un lien vers la page d'un auteur -->
+        <div class="book-card__body">
+            <h3 class="book-card__subheading"><a href="author.php?id=<?= $book['author_id'] ?>">
+                    <i>
+                        <?= $book['name'] ?>
+                    </i>
+                </a>
+            </h3>
+            <p class="book-card__description">
+                <?= $book['description'] ?>
+            </p>
         </div>
-    </header>
-    <main>
-        <?php foreach ($books as $book): ?>
-            <div class="book-card">
-                <h2 class="book-card__heading">
-                    <?= $book['title'] ?>
-                </h2>
-                <!-- on crée un lien vers la page d'un auteur -->
-                <div class="book-card__body">
-                    <h3 class="book-card__subheading"><a href="author.php?id=<?= $book['author_id'] ?>">
-                            <i>
-                                <?= $book['name'] ?>
-                            </i>
-                        </a>
-                    </h3>
-                    <p class="book-card__description">
-                        <?= $book['description'] ?>
-                    </p>
-                </div>
-                <div class="book-card__footer">
-                    <a href="book.php?id=<?= $book['id'] ?>">En savoir plus</a>
-                    <form id="form-<?= $book['id'] ?>" action="delete-book.php" method="post">
-                        <input type="hidden" name="id" value="<?= $book['id'] ?>">
-                        <button>Supprimer</button>
-                    </form>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </main>
-    <footer class="footer">
-        <p>&copy;<?= date('Y') ?></p>
-        <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
-                href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    </footer>
-    <script>
-        // on attend le chargement du DOM avec d'exécuter le code js
-        window.addEventListener('DOMContentLoaded', function () {
-            const forms = document.querySelectorAll('form');
-            forms.forEach(function (form) {
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
+        <div class="book-card__footer">
+            <a href="book.php?id=<?= $book['id'] ?>">En savoir plus</a>
+            <form id="form-<?= $book['id'] ?>" action="delete-book.php" method="post">
+                <input type="hidden" name="id" value="<?= $book['id'] ?>">
+                <button>Supprimer</button>
+            </form>
+        </div>
+    </div>
+<?php endforeach; ?>
+</main>
+<footer class="footer">
+    <p>&copy;<?= date('Y') ?></p>
+    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
+            href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+</footer>
+<script>
+    // on attend le chargement du DOM avec d'exécuter le code js
+    window.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-                    let form = e.currentTarget;
-                    Swal.fire({
-                        title: 'Suppression d\'un livre',
-                        text: 'Voulez vous supprimer définitivement le livre ?',
-                        icon: 'warning',
-                        confirmButtonText: 'Supprimer'
-                    }).then(function (isConfirm) {
-                        if (isConfirm) {
-                            console.log('suppression confirmée', form);
-                            // soumission du formulaire par le code
-                            form.submit();
-                        }
-                    });
-                })
-            });
-        })
-    </script>
+                let form = e.currentTarget;
+                Swal.fire({
+                    title: 'Suppression d\'un livre',
+                    text: 'Voulez vous supprimer définitivement le livre ?',
+                    icon: 'warning',
+                    confirmButtonText: 'Supprimer'
+                }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        console.log('suppression confirmée', form);
+                        // soumission du formulaire par le code
+                        form.submit();
+                    }
+                });
+            })
+        });
+    })
+</script>
 </body>
 
 </html>
