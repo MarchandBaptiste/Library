@@ -65,36 +65,9 @@ $book = $stmt->fetch();
 $title = $book['title'];
 
 $heading = $book['title'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $title ?>
-    </title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-<body>
-    <header class="header">
-        <div class="header__container">
-            <a href="index.php"><img src="./assets/img/open-book.svg" alt="logo livre"></a>
-            <h1>
-                <?= $heading ?>
-            </h1>
-        </div>
-    </header>
-    <header>
-        <h1><?= $book['title'] ?></h1>
-    </header>
-
-    <main>
         <section>
             <h2><?= $book['subtitle'] ?></h2>
             <h3><a href="author.php?id=<?= $book['author_id'] ?>"><i><?= $book['name'] ?></i></a></h3>
@@ -102,12 +75,7 @@ $heading = $book['title'];
             <p>Édition <?= $book['publisher'] ?> | date <?= $book['published'] ?> | p. <?= $book['pages'] ?></p>
             <a href="<?= $book['website'] ?>">site internet</a>
         </section>
-    </main>
-    <footer class="footer">
-        <p>&copy;<?= date('Y') ?></p>
-        <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
-                href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    </footer>
+        <?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
 </body>
 
 </html>
