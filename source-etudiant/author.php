@@ -13,6 +13,13 @@
  */
 
 /**
+ * On affiche la page
+ */
+$title = $author['name'];
+$heading = $author['name'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
+
+/**
  * 1. On récupère le paramètre d'url id
  */
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
@@ -29,18 +36,6 @@ if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
 if (!$author_id) {
     die("Vous devez définir un paramètre id valide dans l'url");
 }
-
-/**
- * 2. Connexion à une base données mysql avec PDO.
- * On va créer une instance de PDO en précisant la source de données, les identifiants de connexion à la base base de données et deux options (facultatives)
- * - Le mode d'erreur exception : permet de léver des exceptions lorsqu'une erreur sql est rencontrée.
- * - Le mode de récupération des données par défault (tableau associatif).
- */
-
-$pdo = new PDO('mysql:dbname=library;host=localhost;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
 
 /**
  * 2. On récupère l'auteur.
@@ -75,65 +70,23 @@ $stmt->execute([$author['id']]);
 $books = $stmt->fetchAll();
 
 
-/**
- * On affiche la page
- */
-$title = $author['name'];
-
-$heading = $author['name'];
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $title ?>
-    </title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script defer src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-<body>
-    <header class="header">
-        <div class="header__container">
-            <a href="index.php"><img src="./assets/img/open-book.svg" alt="logo livre"></a>
-            <h1>
-                <?= $heading ?>
-            </h1>
-        </div>
-    </header>
-    <header>
-        <h1>
-            <?= $author['name'] ?>
-        </h1>
-    </header>
-
-    <main>
-        <section>
-            <p>
-                <?= $author['biography'] ?>
-            </p>
-            <h2>Ouvrages publiés </h2>
-            <ul>
-                <?php foreach ($books as $book): ?>
-                    <li><a href="book.php?id=<?= $book['id'] ?>">
-                            <?= $book['title'] ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; <?= date('Y') ?></p>
-        <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
-                href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-    </footer>
+<section>
+    <p>
+        <?= $author['biography'] ?>
+    </p>
+    <h2>Ouvrages publiés </h2>
+    <ul>
+        <?php foreach ($books as $book): ?>
+            <li><a href="book.php?id=<?= $book['id'] ?>">
+                    <?= $book['title'] ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
+<?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
 </body>
 
 </html>
