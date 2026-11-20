@@ -7,15 +7,15 @@
  */
 
 /**
+ * On affiche la page
+*/
+$title = 'Accueil';
+/**
  * 1. Connexion à une base données mysql avec PDO.
  * On va créer une instance de PDO en précisant la source de données, les identifiants de connexion à la base base de données et deux options (facultatives)
  * - Le mode d'erreur exception : permet de léver des exceptions lorsqu'une erreur sql est rencontrée.
  * - Le mode de récupération des données par défault (tableau associatif).
  */
-/**
- * On affiche la page
- */
-$title = 'Accueil';
 
 $heading = 'Catalogue des livres';
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']);
