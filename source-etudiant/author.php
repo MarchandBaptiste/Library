@@ -13,6 +13,13 @@
  */
 
 /**
+ * On affiche la page
+ */
+$title = $author['name'];
+$heading = $author['name'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
+
+/**
  * 1. On récupère le paramètre d'url id
  */
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
@@ -29,18 +36,6 @@ if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
 if (!$author_id) {
     die("Vous devez définir un paramètre id valide dans l'url");
 }
-
-/**
- * 2. Connexion à une base données mysql avec PDO.
- * On va créer une instance de PDO en précisant la source de données, les identifiants de connexion à la base base de données et deux options (facultatives)
- * - Le mode d'erreur exception : permet de léver des exceptions lorsqu'une erreur sql est rencontrée.
- * - Le mode de récupération des données par défault (tableau associatif).
- */
-
-$pdo = new PDO('mysql:dbname=library;host=localhost;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
 
 /**
  * 2. On récupère l'auteur.
@@ -75,30 +70,23 @@ $stmt->execute([$author['id']]);
 $books = $stmt->fetchAll();
 
 
-/**
- * On affiche la page
- */
-$title = $author['name'];
-
-$heading = $author['name'];
-include_once DOCUMENT_ROOT . '/partials/header.php';
 ?>
 
-        <section>
-            <p>
-                <?= $author['biography'] ?>
-            </p>
-            <h2>Ouvrages publiés </h2>
-            <ul>
-                <?php foreach ($books as $book): ?>
-                    <li><a href="book.php?id=<?= $book['id'] ?>">
-                            <?= $book['title'] ?>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-        <?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
+<section>
+    <p>
+        <?= $author['biography'] ?>
+    </p>
+    <h2>Ouvrages publiés </h2>
+    <ul>
+        <?php foreach ($books as $book): ?>
+            <li><a href="book.php?id=<?= $book['id'] ?>">
+                    <?= $book['title'] ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
+<?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
 </body>
 
 </html>

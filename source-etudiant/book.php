@@ -13,6 +13,13 @@
  */
 
 /**
+ * On affiche la page
+ */
+$title = $book['title'];
+$heading = $book['title'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
+
+/**
  * 1. On récupère le paramètre d'url id
  */
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
@@ -31,18 +38,6 @@ if (!$book_id) {
 }
 
 /**
- * 2. Connexion à une base données mysql avec PDO.
- * On va créer une instance de PDO en précisant la source de données, les identifiants de connexion à la base base de données et deux options (facultatives)
- * - Le mode d'erreur exception : permet de léver des exceptions lorsqu'une erreur sql est rencontrée.
- * - Le mode de récupération des données par défault (tableau associatif).
- */
-
-$pdo = new PDO('mysql:dbname=library;host=localhost;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
-
-/**
  * 2. On récupère le livre.
  */
 
@@ -58,24 +53,16 @@ $stmt->execute([$book_id]);
 
 $book = $stmt->fetch();
 
-
-/**
- * On affiche la page
- */
-$title = $book['title'];
-
-$heading = $book['title'];
-include_once DOCUMENT_ROOT . '/partials/header.php';
 ?>
 
-        <section>
-            <h2><?= $book['subtitle'] ?></h2>
-            <h3><a href="author.php?id=<?= $book['author_id'] ?>"><i><?= $book['name'] ?></i></a></h3>
-            <p><?= $book['description'] ?></p>
-            <p>Édition <?= $book['publisher'] ?> | date <?= $book['published'] ?> | p. <?= $book['pages'] ?></p>
-            <a href="<?= $book['website'] ?>">site internet</a>
-        </section>
-        <?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
+<section>
+    <h2><?= $book['subtitle'] ?></h2>
+    <h3><a href="author.php?id=<?= $book['author_id'] ?>"><i><?= $book['name'] ?></i></a></h3>
+    <p><?= $book['description'] ?></p>
+    <p>Édition <?= $book['publisher'] ?> | date <?= $book['published'] ?> | p. <?= $book['pages'] ?></p>
+    <a href="<?= $book['website'] ?>">site internet</a>
+</section>
+<?php include_once DOCUMENT_ROOT . '/partials/footer.php'; ?>
 </body>
 
 </html>
