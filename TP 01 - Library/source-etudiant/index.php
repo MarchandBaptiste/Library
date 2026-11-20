@@ -13,7 +13,7 @@
  * - Le mode de récupération des données par défault (tableau associatif).
  */
 
-require_once __DIR__ . '/source/database/db_connect.php';
+require_once __DIR__ . '/source/db_connect.php';
 $pdo = db();
 
 /**
