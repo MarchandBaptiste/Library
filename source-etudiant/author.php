@@ -48,6 +48,12 @@ $stmt->execute([$author_id]);
 //  on extrait les données de la réponse réçue.
 $author = $stmt->fetch();
 
+// 404 si l'auteur n'existe pas
+if (!$author) {
+    http_response_code(404);
+    die("Aucun auteur trouvé avec cet id.");
+}
+
 /**
  * 2. On récupère les livres de l'auteur.
 */
