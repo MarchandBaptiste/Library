@@ -48,6 +48,11 @@ $stmt->execute([$book_id]);
 //  on extrait les données de la réponse réçue.
 $book = $stmt->fetch();
 
+if (!$book) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
+
 /**
  * On affiche la page
  */
