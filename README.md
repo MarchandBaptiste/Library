@@ -11,7 +11,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 * **Arborescence plate et désordonnée** : Les fichiers de base de données, les scripts de traitement (`delete-book.php`) et les vues se trouvaient au même niveau. Un fichier de base de données parasite (`source-etudiantdatabase.sqlite`) traînait également à la racine.
 * **Chemins relatifs fragiles** : Les inclusions et l'accès à la base de données reposaient sur des chemins relatifs susceptibles de casser lors de tout déplacement de fichier.
 * **Manque de gestion d'erreurs** : Aucune vérification d'existence ni erreur `404` n'était prévue pour les identifiants invalides (livres, auteurs ou suppressions).
-* **Gestion Git incomplète** : Absence de fichier `.gitignore`, entraînant le suivi de la base de données locale SQLite.
 
 ## 2. Évolution de l'arborescence
 
@@ -93,7 +92,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
   * Séparation des fichiers de style dans `assets/style/css/` et `assets/style/scss/`.
   * Création d'un dossier `assets/js/` contenant `script.js`, avec correction du lien d'appel dans le header.
 * **Isolation des traitements (`utils/`)** : Déplacement de `delete-book.php` dans un dossier `utils/` dédié, avec mise à jour des liens et des redirections pour assurer le bon fonctionnement de la suppression.
-* **Gestion Git et propreté du dépôt** : Ajout d'un `.gitignore` (excluant notamment les fichiers `.sqlite`), suppression du fichier parasite `source-etudiantdatabase.sqlite` à la racine et correction de la structure globale du dépôt.
 
 ### Base de données et requêtes SQL
 * **Regroupement des fichiers BDD (`database/`)** : Déplacement de `database.sqlite` et `library.sql` dans un dossier dédié.
