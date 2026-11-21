@@ -11,11 +11,14 @@
  * Si aucun livre n'est trouvé, on affiche une erreur 404
  * Sinon, on supprime le livre et on fait une redirection vers le catalogue.
  */
+
 // Appelle des constantes
 require_once __DIR__ . '/../config/constants.php';
+
 /**
  * 1. On récupère l'id du post
  */
+
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
 $book_id = null;
 
@@ -26,7 +29,6 @@ if (!empty($_POST['id']) && ctype_digit($_POST['id'])) {
 }
 
 // s'il n'existe pas de paramètre, on affiche le message d'erreur
-
 if (!$book_id) {
     die("Vous devez définir renseigner un id valide");
 }
@@ -38,6 +40,7 @@ if (!$book_id) {
  * - Le mode de récupération des données par défault (tableau associatif).
  */
 
+// Connexion a la BDD
 require_once __DIR__ . '/../helpers/db_connect.php';
 $pdo = db();
 
@@ -46,11 +49,9 @@ $pdo = db();
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-
 $stmt = $pdo->prepare('DELETE FROM `books` WHERE `id` = ?');
 
 // on exécute la requête en précisant la valeur du paramètre
-
 $stmt->execute([$book_id]);
 
 
