@@ -13,6 +13,8 @@
  */
 // Appelle des constantes
 require_once __DIR__ . '/config/constants.php';
+require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
+$pdo = db();
 /**
  * On affiche la page
  */
