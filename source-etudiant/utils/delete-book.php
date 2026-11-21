@@ -12,9 +12,13 @@
  * Sinon, on supprime le livre et on fait une redirection vers le catalogue.
  */
 
+// Appelle des constantes
+require_once __DIR__ . '/../config/constants.php';
+
 /**
  * 1. On récupère l'id du post
  */
+
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
 $book_id = null;
 
@@ -25,7 +29,6 @@ if (!empty($_POST['id']) && ctype_digit($_POST['id'])) {
 }
 
 // s'il n'existe pas de paramètre, on affiche le message d'erreur
-
 if (!$book_id) {
     die("Vous devez définir renseigner un id valide");
 }
@@ -37,27 +40,35 @@ if (!$book_id) {
  * - Le mode de récupération des données par défault (tableau associatif).
  */
 
-$pdo = new PDO('mysql:dbname=library;host=localhost;charset=utf8', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+// Connexion a la BDD
+require_once __DIR__ . '/../helpers/db_connect.php';
+$pdo = db();
 
 /**
  * 2. On récupère le livre.
  */
+// Vérifier que le livre existe avant de supprimer
+$stmtCheck = $pdo->prepare(SQL_CHECK_BOOK_EXISTS);
+$stmtCheck->execute([$book_id]);
+if (!$stmtCheck->fetch()) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-
-$stmt = $pdo->prepare('DELETE FROM `books` WHERE `id` = ?');
+$stmt = $pdo->prepare(SQL_DELETE_BOOK);
 
 // on exécute la requête en précisant la valeur du paramètre
-
 $stmt->execute([$book_id]);
 
+if ($stmt->rowCount() === 0) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
 
 /**
  * On redirige vers le catalogue de livres
  */
 
-header('Location: index.php');
+header('Location: ../index.php');
 exit();
