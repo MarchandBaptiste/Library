@@ -1,16 +1,18 @@
+@use "../abstracts/index" as v;
+
 /*
 HEADER
 */
 
 .header {
-  background: #fff;
+  background: v.$color-white;
 
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   height: 10vh;
-  box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px v.$color-brown;
 
   z-index: 2;
 

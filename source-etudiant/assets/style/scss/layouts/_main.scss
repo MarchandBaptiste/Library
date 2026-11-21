@@ -1,3 +1,5 @@
+@use "../abstracts/index" as v;
+
 /*
 MAIN CONTENT LAYOUT
 */
@@ -6,7 +8,7 @@ body {
   flex-direction: column;
   width: 80vw;
   margin: auto;
-  background: #ccc;
+  background: v.$color-bg;
 }
 
 h1,
@@ -30,7 +32,7 @@ main {
 
   section {
     grid-area: 1 / 2 / 2 / 3;
-    background: #fff;
+    background: v.$color-white;
     padding: 2rem;
 
     position: relative;
@@ -44,8 +46,8 @@ main {
       width: 50%;
       top: 80%;
       max-width: 300px;
-      background: #777;
-      box-shadow: 0 15px 10px #777;
+      background: v.$color-brown;
+      box-shadow: 0 15px 10px v.$color-brown;
       transform: rotate(-3deg);
     }
   }
