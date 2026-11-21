@@ -47,6 +47,13 @@ $pdo = db();
 /**
  * 2. On récupère le livre.
  */
+// Vérifier que le livre existe avant de supprimer
+$stmtCheck = $pdo->prepare('SELECT id FROM `books` WHERE `id` = ?');
+$stmtCheck->execute([$book_id]);
+if (!$stmtCheck->fetch()) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
 $stmt = $pdo->prepare('DELETE FROM `books` WHERE `id` = ?');
