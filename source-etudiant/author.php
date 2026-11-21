@@ -15,16 +15,10 @@
 require_once __DIR__ . '/config/constants.php';
 require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
 $pdo = db();
-/**
- * On affiche la page
- */
-$title = $author['name'];
-$heading = $author['name'];
-include_once DOCUMENT_ROOT . '/partials/header.php';
 
 /**
  * 1. On récupère le paramètre d'url id
- */
+*/
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
 $author_id = null;
 
@@ -58,7 +52,7 @@ $author = $stmt->fetch();
 
 /**
  * 2. On récupère les livres de l'auteur.
- */
+*/
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
 
@@ -72,6 +66,12 @@ $stmt->execute([$author['id']]);
 
 $books = $stmt->fetchAll();
 
+/**
+ * On affiche la page
+ */
+$title = $author['name'];
+$heading = $author['name'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
 
 ?>
 
