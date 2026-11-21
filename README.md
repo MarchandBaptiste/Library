@@ -2,8 +2,6 @@
 
 Compte rendu des modifications effectuées lors de la première phase de reprise du projet. L'objectif était d'auditer l'existant, de corriger les problèmes structurels et de sécuriser l'application tout en conservant le paradigme procédural actuel, sans régression fonctionnelle.
 
----
-
 ## 1. Constats initiaux
 
 Lors de l'exploration de la base de code d'origine, plusieurs points bloquants pour la maintenabilité et le travail en équipe ont été identifiés :
@@ -14,8 +12,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 * **Chemins relatifs fragiles** : Les inclusions et l'accès à la base de données reposaient sur des chemins relatifs susceptibles de casser lors de tout déplacement de fichier.
 * **Manque de gestion d'erreurs** : Aucune vérification d'existence ni erreur `404` n'était prévue pour les identifiants invalides (livres, auteurs ou suppressions).
 * **Gestion Git incomplète** : Absence de fichier `.gitignore`, entraînant le suivi de la base de données locale SQLite.
-
----
 
 ## 2. Évolution de l'arborescence
 
@@ -88,8 +84,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
     └───utils
             delete-book.php
 ```
-
----
 
 ## 3. Détail des améliorations apportées
 
