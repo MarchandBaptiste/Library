@@ -1,5 +1,4 @@
 <?php
-require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
 $pdo = db();
 
 ?>

@@ -13,12 +13,11 @@
  */
 // Appelle des constantes
 require_once __DIR__ . '/config/constants.php';
+require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
+$pdo = db();
 /**
  * On affiche la page
  */
-$title = $book['title'];
-$heading = $book['title'];
-include_once DOCUMENT_ROOT . '/partials/header.php';
 
 /**
  * 1. On récupère le paramètre d'url id
@@ -43,7 +42,6 @@ if (!$book_id) {
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-
 $stmt = $pdo->prepare('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id` WHERE `books`.`id` = ?');
 
 // on exécute la requête en précisant la valeur du paramètre
@@ -53,6 +51,9 @@ $stmt->execute([$book_id]);
 //  on extrait les données de la réponse réçue.
 
 $book = $stmt->fetch();
+$title = $book['title'];
+$heading = $book['title'];
+include_once DOCUMENT_ROOT . '/partials/header.php';
 
 ?>
 
