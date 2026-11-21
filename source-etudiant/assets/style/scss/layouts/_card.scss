@@ -1,0 +1,42 @@
+@use "../abstracts/index" as v;
+/*
+CARDS
+*/
+
+.book-card {
+  padding: 1.5rem;
+  position: relative;
+  background: v.$color-white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  &::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width: 300px;
+    background: red;
+    box-shadow: 0 15px 10px v.$color-brown;
+    transform: rotate(-3deg);
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+
+    a,
+    button {
+      //   text-decoration: none;
+      font-variant: small-caps;
+      color: black;
+    }
+
+    button {
+      padding: 2px 8px;
+    }
+  }
+}
