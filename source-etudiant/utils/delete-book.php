@@ -54,6 +54,10 @@ $stmt = $pdo->prepare('DELETE FROM `books` WHERE `id` = ?');
 // on exécute la requête en précisant la valeur du paramètre
 $stmt->execute([$book_id]);
 
+if ($stmt->rowCount() === 0) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
 
 /**
  * On redirige vers le catalogue de livres
