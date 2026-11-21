@@ -6,27 +6,27 @@
  * On devra se connecter à la base de données et récupérer une liste de livres triés par ordre alphabétique de titre. On va boucler sur la liste pour afficher chaque item de la liste.
  */
 
-// Appelle des constantes
+// Appelle des constantes et connexion a la BDD
 require_once __DIR__ . '/config/constants.php';
 require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
-/**
- * On affiche la page
- */
-$title = 'Accueil';
-$heading = 'Catalogue des livres';
-include_once DOCUMENT_ROOT . '/partials/header.php';
+$pdo = db();
 
 /**
  * 2. On récupère la liste des livres.
  */
 
 // on utilise la méthode query car notre requête n'a pas besoin de paramètre.
-
-$stmt = $pdo->query('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id`');
+$stmt = $pdo->query(SQL_LIST_BOOKS);
 
 //  on extrait les données de la réponse réçue.
-
 $books = $stmt->fetchAll();
+
+/**
+ * On affiche la page
+ */
+$title = 'Accueil';
+$heading = 'Catalogue des livres';
+include_once DOCUMENT_ROOT . '/partials/header.php';
 ?>
 
 <?php foreach ($books as $book): ?>

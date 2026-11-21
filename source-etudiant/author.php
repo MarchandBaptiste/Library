@@ -11,7 +11,8 @@
  * Si aucun livre n'est trouvé, on affiche une erreur 404
  * Sinon, on affiche le livre.
  */
-// Appelle des constantes
+
+// Appelle des constantes et connexion a la BDD
 require_once __DIR__ . '/config/constants.php';
 require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
 $pdo = db();
@@ -19,6 +20,7 @@ $pdo = db();
 /**
  * 1. On récupère le paramètre d'url id
 */
+
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
 $author_id = null;
 
@@ -29,7 +31,6 @@ if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
 }
 
 // s'il n'existe pas de paramètre, on affiche le message d'erreur
-
 if (!$author_id) {
     die("Vous devez définir un paramètre id valide dans l'url");
 }
@@ -39,31 +40,31 @@ if (!$author_id) {
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-
-$stmt = $pdo->prepare('SELECT * FROM `authors` WHERE `id` = ?');
+$stmt = $pdo->prepare(SQL_GET_AUTHOR);
 
 // on exécute la requête en précisant la valeur du paramètre
-
 $stmt->execute([$author_id]);
 
 //  on extrait les données de la réponse réçue.
-
 $author = $stmt->fetch();
+
+// 404 si l'auteur n'existe pas
+if (!$author) {
+    http_response_code(404);
+    die("Aucun auteur trouvé avec cet id.");
+}
 
 /**
  * 2. On récupère les livres de l'auteur.
 */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-
-$stmt = $pdo->prepare('SELECT * FROM `books` WHERE `books`.`author_id` = ?');
+$stmt = $pdo->prepare(SQL_GET_AUTHOR_BOOKS);
 
 // on exécute la requête en précisant la valeur du paramètre
-
 $stmt->execute([$author['id']]);
 
 //  on extrait les données de la réponse réçue.
-
 $books = $stmt->fetchAll();
 
 /**

@@ -11,17 +11,16 @@
  * Si aucun livre n'est trouvé, on affiche une erreur 404
  * Sinon, on affiche le livre.
  */
-// Appelle des constantes
+
+// Appelle des constantes et connexion a la BDD
 require_once __DIR__ . '/config/constants.php';
 require_once DOCUMENT_ROOT . '/helpers/db_connect.php';
 $pdo = db();
-/**
- * On affiche la page
- */
 
 /**
  * 1. On récupère le paramètre d'url id
  */
+
 // on déclare la variable qui va récevoir l'id et on l'initialise avec rien.
 $book_id = null;
 
@@ -32,7 +31,6 @@ if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
 }
 
 // s'il n'existe pas de paramètre, on affiche le message d'erreur
-
 if (!$book_id) {
     die("Vous devez définir un paramètre id valide dans l'url");
 }
@@ -42,15 +40,22 @@ if (!$book_id) {
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-$stmt = $pdo->prepare('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id` WHERE `books`.`id` = ?');
+$stmt = $pdo->prepare(SQL_GET_BOOK);
 
 // on exécute la requête en précisant la valeur du paramètre
-
 $stmt->execute([$book_id]);
 
 //  on extrait les données de la réponse réçue.
-
 $book = $stmt->fetch();
+
+if (!$book) {
+    http_response_code(404);
+    die("Aucun livre trouvé avec cet id.");
+}
+
+/**
+ * On affiche la page
+ */
 $title = $book['title'];
 $heading = $book['title'];
 include_once DOCUMENT_ROOT . '/partials/header.php';
