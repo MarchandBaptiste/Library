@@ -6,11 +6,11 @@ Compte rendu des modifications effectuées lors de la première phase de reprise
 
 Lors de l'exploration de la base de code d'origine, plusieurs points bloquants pour la maintenabilité et le travail en équipe ont été identifiés :
 
-* **Absence de séparation des responsabilités** : Les fichiers de vues (`index.php`, `book.php`, `author.php`) mélangeaient HTML, connexion à la base de données, requêtes SQL et logique métier.
-* **Duplication de code** : L'en-tête (`header`), le pied de page (`footer`) et la connexion à la base de données étaient répétés dans plusieurs fichiers.
-* **Arborescence plate et désordonnée** : Les fichiers de base de données, les scripts de traitement (`delete-book.php`) et les vues se trouvaient au même niveau. Un fichier de base de données parasite (`source-etudiantdatabase.sqlite`) traînait également à la racine.
-* **Chemins relatifs fragiles** : Les inclusions et l'accès à la base de données reposaient sur des chemins relatifs susceptibles de casser lors de tout déplacement de fichier.
-* **Manque de gestion d'erreurs** : Aucune vérification d'existence ni erreur `404` n'était prévue pour les identifiants invalides (livres, auteurs ou suppressions).
+- **Absence de séparation des responsabilités** : Les fichiers de vues (`index.php`, `book.php`, `author.php`) mélangeaient HTML, connexion à la base de données, requêtes SQL et logique métier.
+- **Duplication de code** : L'en-tête (`header`), le pied de page (`footer`) et la connexion à la base de données étaient répétés dans plusieurs fichiers.
+- **Arborescence plate et désordonnée** : Les fichiers de base de données, les scripts de traitement (`delete-book.php`) et les vues se trouvaient au même niveau. Un fichier de base de données parasite (`source-etudiantdatabase.sqlite`) traînait également à la racine.
+- **Chemins relatifs fragiles** : Les inclusions et l'accès à la base de données reposaient sur des chemins relatifs susceptibles de casser lors de tout déplacement de fichier.
+- **Manque de gestion d'erreurs** : Aucune vérification d'existence ni erreur `404` n'était prévue pour les identifiants invalides (livres, auteurs ou suppressions).
 
 ## 2. Évolution de l'arborescence
 
@@ -100,25 +100,26 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 ## 3. Détail des améliorations apportées
 
 ### Architecture et configuration
-* **Centralisation des constantes (`config/constants.php`)** : Création d'un dossier `config` et définition de la constante `DOCUMENT_ROOT`. Son utilisation dans les fichiers et dans la connexion à la base de données garantit des chemins absolus fiables.
-* **Réorganisation des assets (`assets/`)** :
-  * Séparation des fichiers de style dans `assets/style/css/` et `assets/style/scss/`.
-  * Création d'un dossier `assets/js/` contenant `script.js`, avec correction du lien d'appel dans le header.
-* **Isolation des traitements (`utils/`)** : Déplacement de `delete-book.php` dans un dossier `utils/` dédié, avec mise à jour des liens et des redirections pour assurer le bon fonctionnement de la suppression.
+- **Centralisation des constantes (`config/constants.php`)** : Création d'un dossier `config` et définition de la constante `DOCUMENT_ROOT`. Son utilisation dans les fichiers et dans la connexion à la base de données garantit des chemins absolus fiables.
+- **Réorganisation des assets (`assets/`)** :
+  - Séparation des fichiers de style dans `assets/style/css/` et `assets/style/scss/`.
+  - **Modularisation du SCSS** : Découpage de l'ancien fichier unique `style.scss` en plusieurs fichiers partiels organisés par rôle (`abstracts/`, `bases/`, `layouts/`) et regroupés dans `main.scss`, afin de simplifier la lecture, le repérage et la maintenance du style.
+  - Création d'un dossier `assets/js/` contenant `script.js`, avec correction du lien d'appel dans le header.
+- **Isolation des traitements (`utils/`)** : Déplacement de `delete-book.php` dans un dossier `utils/` dédié, avec mise à jour des liens et des redirections pour assurer le bon fonctionnement de la suppression.
 
 ### Base de données et requêtes SQL
-* **Regroupement des fichiers BDD (`database/`)** : Déplacement de `database.sqlite` et `library.sql` dans un dossier dédié.
-* **Connexion centralisée (`helpers/db_connect.php`)** : Extraction et correction de la connexion SQLite dans un fichier helper unique, utilisant `DOCUMENT_ROOT`.
-* **Centralisation des requêtes (`database/queries/queries.php`)** : Regroupement de l'ensemble des requêtes SQL dans un fichier dédié, puis adaptation des pages pour appeler ces requêtes au lieu de les écrire en dur.
+- **Regroupement des fichiers BDD (`database/`)** : Déplacement de `database.sqlite` et `library.sql` dans un dossier dédié.
+- **Connexion centralisée (`helpers/db_connect.php`)** : Extraction et correction de la connexion SQLite dans un fichier helper unique, utilisant `DOCUMENT_ROOT`.
+- **Centralisation des requêtes (`database/queries/queries.php`)** : Regroupement de l'ensemble des requêtes SQL dans un fichier dédié, puis adaptation des pages pour appeler ces requêtes au lieu de les écrire en dur.
 
 ### Modularité des vues (Partials)
-* **Factorisation du HTML (`partials/header.php` et `partials/footer.php`)** : Découpage des éléments communs et intégration via `include` sur l'ensemble des pages (`index.php`, `book.php`, `author.php`).
-* **Titres dynamiques** : Mise en place et correction de l'affichage dynamique du titre de chaque page, avec ajustement de l'ordre d'appel du header.
+- **Factorisation du HTML (`partials/header.php` et `partials/footer.php`)** : Découpage des éléments communs et intégration via `include` sur l'ensemble des pages (`index.php`, `book.php`, `author.php`).
+- **Titres dynamiques** : Mise en place et correction de l'affichage dynamique du titre de chaque page, avec ajustement de l'ordre d'appel du header.
 
 ### Fiabilité, gestion d'erreurs et UX
-* **Gestion des erreurs 404** : Ajout de vérifications et de réponses `404` dans `book.php`, `author.php` (contrôle de l'ID auteur) et `delete-book.php`.
-* **Sécurisation de la suppression** : Ajout d'une vérification de l'existence du livre en base avant de procéder à sa suppression dans `delete-book.php`.
-* **Tri des données** : Mise en place d'un affichage par ordre alphabétique.
+- **Gestion des erreurs 404** : Ajout de vérifications et de réponses `404` dans `book.php`, `author.php` (contrôle de l'ID auteur) et `delete-book.php`.
+- **Sécurisation de la suppression** : Ajout d'une vérification de l'existence du livre en base avant de procéder à sa suppression dans `delete-book.php`.
+- **Tri des données** : Mise en place d'un affichage par ordre alphabétique.
 
 ### Assainissement du code (Cleanup)
-* Nettoyage et refactorisation des fichiers principaux : `index.php`, `book.php`, `author.php` et `delete-book.php`.
+- Nettoyage et refactorisation des fichiers principaux : `index.php`, `book.php`, `author.php` et `delete-book.php`.
