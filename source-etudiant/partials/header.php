@@ -1,8 +1,3 @@
-<?php
-$pdo = db();
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
