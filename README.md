@@ -16,7 +16,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 
 ### Avant (Arborescence de base)
 ```text
-│   LA MANU_TP_POO Avancée.pdf
 │   source-etudiantdatabase.sqlite
 │   
 └───source-etudiant
@@ -40,7 +39,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 ### Après (Arborescence actuelle)
 ```text
 │   .gitignore
-│   LA MANU_TP_POO Avancée.pdf
 │   README.md
 │   
 └───source-etudiant
@@ -61,8 +59,23 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
     │       │       style.css.map
     │       │       
     │       └───scss
-    │               style.scss
-    │               
+    │           │   main.scss
+    │           │   
+    │           ├───abstracts
+    │           │       _index.scss
+    │           │       _variables.scss
+    │           │       
+    │           ├───bases
+    │           │       _index.scss
+    │           │       _reset.scss
+    │           │       
+    │           └───layouts
+    │                   _card.scss
+    │                   _general.scss
+    │                   _header.scss
+    │                   _index.scss
+    │                   _main.scss
+    │                   
     ├───config
     │       constants.php
     │       
