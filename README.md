@@ -12,7 +12,7 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 - **Chemins relatifs fragiles** : Les inclusions et l'accès à la base de données reposaient sur des chemins relatifs susceptibles de casser lors de tout déplacement de fichier.
 - **Manque de gestion d'erreurs** : Aucune vérification d'existence ni erreur `404` n'était prévue pour les identifiants invalides (livres, auteurs ou suppressions).
 
-## 2. Évolution de l'arborescence
+## Évolution de l'arborescence
 
 ### Avant (Arborescence de base)
 ```text
@@ -36,7 +36,7 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
                 open-book.svg
 ```
 
-### Après (Arborescence actuelle)
+### V2
 ```text
 │   .gitignore
 │   README.md
@@ -97,7 +97,7 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
             delete-book.php
 ```
 
-## 3. Détail des améliorations apportées
+## V2 - Détail des améliorations apportées
 
 ### Architecture et configuration
 - **Centralisation des constantes (`config/constants.php`)** : Création d'un dossier `config` et définition de la constante `DOCUMENT_ROOT`. Son utilisation dans les fichiers et dans la connexion à la base de données garantit des chemins absolus fiables.
@@ -110,7 +110,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 ### Base de données et requêtes SQL
 - **Regroupement des fichiers BDD (`database/`)** : Déplacement de `database.sqlite` et `library.sql` dans un dossier dédié.
 - **Connexion centralisée (`helpers/db_connect.php`)** : Extraction et correction de la connexion SQLite dans un fichier helper unique, utilisant `DOCUMENT_ROOT`.
-- **Centralisation des requêtes (`database/queries/queries.php`)** : Regroupement de l'ensemble des requêtes SQL dans un fichier dédié, puis adaptation des pages pour appeler ces requêtes au lieu de les écrire en dur.
 
 ### Modularité des vues (Partials)
 - **Factorisation du HTML (`partials/header.php` et `partials/footer.php`)** : Découpage des éléments communs et intégration via `include` sur l'ensemble des pages (`index.php`, `book.php`, `author.php`).
@@ -121,5 +120,81 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 - **Sécurisation de la suppression** : Ajout d'une vérification de l'existence du livre en base avant de procéder à sa suppression dans `delete-book.php`.
 - **Tri des données** : Mise en place d'un affichage par ordre alphabétique.
 
-### Assainissement du code (Cleanup)
-- Nettoyage et refactorisation des fichiers principaux : `index.php`, `book.php`, `author.php` et `delete-book.php`.
+### V3
+```text
+│   .gitignore
+│   LA MANU_TP_POO Avancée.pdf
+│   README.md
+│   
+└───source-etudiant
+    │   index.php
+    │   
+    ├───assets
+    │   ├───img
+    │   │       open-book.svg
+    │   │       
+    │   ├───js
+    │   │       script.js
+    │   │       
+    │   └───style
+    │       ├───css
+    │       │       style.css
+    │       │       style.css.map
+    │       │       
+    │       └───scss
+    │           │   main.scss
+    │           │   
+    │           ├───abstracts
+    │           │       _index.scss
+    │           │       _variables.scss
+    │           │       
+    │           ├───bases
+    │           │       _index.scss
+    │           │       _reset.scss
+    │           │       
+    │           └───layouts
+    │                   _card.scss
+    │                   _general.scss
+    │                   _header.scss
+    │                   _index.scss
+    │                   _main.scss
+    │                   
+    ├───config
+    │       constants.php
+    │       
+    ├───controllers
+    │       authors.php
+    │       books.php
+    │       
+    ├───database
+    │       database.sqlite
+    │       library.sql
+    │       
+    ├───helpers
+    │       db_connect.php
+    │       
+    ├───models
+    │       author.php
+    │       book.php
+    │       
+    ├───templates
+    │   ├───authors
+    │   │       author.php
+    │   │       
+    │   ├───books
+    │   │       book.php
+    │   │       home.php
+    │   │       
+    │   └───partials
+    │           footer.php
+    │           header.php
+    │           
+    └───utils
+```
+
+## V3 - Détail des améliorations apportées
+
+Cette phase conserve les acquis de la V2 et fait évoluer l'application vers une architecture MVC, sans changement fonctionnel pour l'utilisateur.
+
+### Architecture et configuration
+- **Mise en place du modèle MVC** : séparation stricte des responsabilités entre les modèles (accès aux données), les contrôleurs (traitement des requêtes) et les vues (affichage). Le SQL ne se trouve plus que dans `models/`, le HTML uniquement dans `templates/`.
