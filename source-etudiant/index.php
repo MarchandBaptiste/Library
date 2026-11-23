@@ -16,7 +16,7 @@ $pdo = db();
  */
 
 // on utilise la méthode query car notre requête n'a pas besoin de paramètre.
-$stmt = $pdo->query(SQL_LIST_BOOKS);
+$stmt = $pdo->query('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id` ORDER BY `books`.`title` ASC');
 
 //  on extrait les données de la réponse réçue.
 $books = $stmt->fetchAll();

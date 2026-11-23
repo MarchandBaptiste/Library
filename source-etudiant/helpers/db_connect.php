@@ -1,5 +1,4 @@
 <?php
-require_once DOCUMENT_ROOT . '/database/queries/queries.php';
 function db()
 {
     try {

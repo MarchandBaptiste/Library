@@ -40,7 +40,7 @@ if (!$book_id) {
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-$stmt = $pdo->prepare(SQL_GET_BOOK);
+$stmt = $pdo->prepare('SELECT * FROM `books` INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id` WHERE `books`.`id` = ?');
 
 // on exécute la requête en précisant la valeur du paramètre
 $stmt->execute([$book_id]);

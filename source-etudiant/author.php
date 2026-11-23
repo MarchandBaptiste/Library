@@ -40,7 +40,7 @@ if (!$author_id) {
  */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-$stmt = $pdo->prepare(SQL_GET_AUTHOR);
+$stmt = $pdo->prepare('SELECT * FROM `authors` WHERE `id` = ?');
 
 // on exécute la requête en précisant la valeur du paramètre
 $stmt->execute([$author_id]);
@@ -59,7 +59,7 @@ if (!$author) {
 */
 
 // on utilise la méthode prepare car notre requête a pas besoin d'un paramètre envoyé par l'utilisateur.
-$stmt = $pdo->prepare(SQL_GET_AUTHOR_BOOKS);
+$stmt = $pdo->prepare('SELECT * FROM `books` WHERE `books`.`author_id` = ?');
 
 // on exécute la requête en précisant la valeur du paramètre
 $stmt->execute([$author['id']]);
