@@ -24,5 +24,5 @@ function author_ctrl(): void
     $title = $author['name'];
     $heading = $author['name'];
 
-    require DOCUMENT_ROOT . '/templates/authors/author.php';
+    require_once DOCUMENT_ROOT . '/templates/authors/author.php';
 }

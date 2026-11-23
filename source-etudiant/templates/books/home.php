@@ -1,4 +1,4 @@
-<?php require DOCUMENT_ROOT . '/templates/partials/header.php'; ?>
+<?php require_once DOCUMENT_ROOT . '/templates/partials/header.php'; ?>
 <?php foreach ($books as $book): ?>
     <div class="book-card">
         <h2 class="book-card__heading">
@@ -26,7 +26,7 @@
         </div>
     </div>
 <?php endforeach; ?>
-<?php require DOCUMENT_ROOT . '/templates/partials/footer.php'; ?>
+<?php require_once DOCUMENT_ROOT . '/templates/partials/footer.php'; ?>
 </body>
 
 </html>
