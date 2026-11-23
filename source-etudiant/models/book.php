@@ -17,6 +17,7 @@ function getListBooks(): array
 
 /**
  * On récupère un livre par son id avec le nom de son auteur
+ * @param int $id L'identifiant du livre
  */
 function getBook(int $id): array|false
 {
@@ -33,6 +34,7 @@ function getBook(int $id): array|false
 
 /**
  * On supprime un livre et on indique si une ligne a bien été supprimée
+ * @param int $id L'identifiant du livre
  */
 function deleteBook(int $id): bool
 {

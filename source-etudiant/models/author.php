@@ -2,6 +2,7 @@
 
 /**
  * On récupère un auteur par son id
+ * @param int $id L'identifiant du l'auteur
  */
 function getAuthor(int $id): array|false
 {
@@ -13,6 +14,7 @@ function getAuthor(int $id): array|false
 
 /**
  * On récupère les livres d'un auteur
+ * @param int $authorId L'identifiant de l'auteur
  */
 function getBooksAuthor(int $authorId): array
 {
