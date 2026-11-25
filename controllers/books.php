@@ -8,7 +8,7 @@ function list_ctrl(): void
     $books = getListBooks();
     $title = 'Catalogue';
     $heading = 'Catalogue des livres';
-    require_once DOCUMENT_ROOT . '/templates/books/home.php';
+    renderViews("books/home", compact('title', 'books', 'heading'));
 }
 
 /**
@@ -28,7 +28,7 @@ function book_ctrl(): void
     }
     $title = $book['title'];
     $heading = $book['title'];
-    require_once DOCUMENT_ROOT . '/templates/books/book.php';
+    renderViews("books/book", compact('title', 'books', 'heading'));
 }
 
 /**

@@ -1,12 +1,3 @@
-<?php
-
-/**
- * Vue d'un livre
- * book_ctrl() : $book
- */
-require_once DOCUMENT_ROOT . '/templates/partials/header.php';
-?>
-
 <section>
     <h2><?= htmlspecialchars($book['subtitle'] ?? '') ?></h2>
     <h3>
@@ -22,7 +13,6 @@ require_once DOCUMENT_ROOT . '/templates/partials/header.php';
     </p>
     <a href="<?= htmlspecialchars($book['website'] ?? '') ?>">site internet</a>
 </section>
-<?php require_once DOCUMENT_ROOT . '/templates/partials/footer.php'; ?>
 </body>
 
 </html>
