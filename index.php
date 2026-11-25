@@ -11,6 +11,9 @@ $pdo = db();
 require_once DOCUMENT_ROOT . '/models/book.php';
 require_once DOCUMENT_ROOT . '/models/author.php';
 
+// Utils
+require_once DOCUMENT_ROOT . "/utils/viewsUtils.php";
+
 // Contrôleurs
 require_once DOCUMENT_ROOT . '/controllers/books.php';
 require_once DOCUMENT_ROOT . '/controllers/authors.php';

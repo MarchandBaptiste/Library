@@ -1,12 +1,3 @@
-<?php
-
-/**
- * Vue d'un auteur et de ses livres
- * $author, $books
- */
-require DOCUMENT_ROOT . '/templates/partials/header.php';
-?>
-
 <section>
     <p>
         <?= htmlspecialchars($author['biography'] ?? '') ?>
@@ -22,7 +13,6 @@ require DOCUMENT_ROOT . '/templates/partials/header.php';
         <?php endforeach; ?>
     </ul>
 </section>
-<?php require DOCUMENT_ROOT . '/templates/partials/footer.php'; ?>
 </body>
 
 </html>
