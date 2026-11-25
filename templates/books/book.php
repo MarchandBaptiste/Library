@@ -13,6 +13,3 @@
     </p>
     <a href="<?= htmlspecialchars($book->website ?? '') ?>">site internet</a>
 </section>
-</body>
-
-</html>
