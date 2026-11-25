@@ -38,12 +38,13 @@ function book_ctrl(): void
  */
 function delete_ctrl(): void
 {
+    $booksModel = new Book();
     $book_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
     if (!$book_id || $book_id < 1) {
         http_response_code(400);
         die('Vous devez renseigner un id valide.');
     }
-    if (!deleteBook($book_id)) {
+    if (!$booksModel->deleteBook($book_id)) {
         http_response_code(404);
         die('Aucun livre trouvé avec cet id.');
     }
