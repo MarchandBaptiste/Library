@@ -44,8 +44,9 @@ class Book
          INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id`
          WHERE `books`.`id` = ?'
         );
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Book::class);
         $stmt->execute([$id]);
-        return $stmt->fetchObject(Book::class);
+        return $stmt->fetch();
     }
 
     /**

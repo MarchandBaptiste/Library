@@ -13,10 +13,11 @@ class Author
      * On récupère un auteur par son id
      * @param int $id L'identifiant du l'auteur
      */
-    public function getAuthor(int $id): array|false
+    public function getAuthor(int $id): Author|false
     {
         global $pdo;
         $stmt = $pdo->prepare('SELECT * FROM `authors` WHERE `id` = ?');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Author::class);
         $stmt->execute([$id]);
         return $stmt->fetch();
     }
@@ -32,7 +33,7 @@ class Author
             'SELECT * FROM `books` WHERE `author_id` = ? ORDER BY `title` ASC'
         );
         $stmt->execute([$authorId]);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Book::class);
     }
     public function __call(string $method, array $args): string
     {

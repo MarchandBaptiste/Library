@@ -28,8 +28,8 @@ function book_ctrl(): void
         http_response_code(404);
         die('Aucun livre trouvé avec cet id.');
     }
-    $title = $book['title'];
-    $heading = $book['title'];
+    $title = $book->title;
+    $heading = $book->title;
     renderViews("books/book", compact('title', 'book_id', 'heading', 'book'));
 }
 

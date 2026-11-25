@@ -23,8 +23,8 @@ function author_ctrl(): void
     $booksModel = new Author();
     $books = $booksModel->getBooksAuthor($author_id);
 
-    $title = $author['name'];
-    $heading = $author['name'];
+    $title = $author->name;
+    $heading = $author->name;
 
     renderViews("authors/author", compact('title', 'heading', 'books', 'author'));
 }
