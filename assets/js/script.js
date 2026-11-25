@@ -1,20 +1,18 @@
 // on attend le chargement du DOM avec d'exécuter le code js
 window.addEventListener("DOMContentLoaded", function () {
-  const forms = document.querySelectorAll("form");
+  const forms = document.querySelectorAll("#delete");
   forms.forEach(function (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-
-      let form = e.currentTarget;
       Swal.fire({
         title: "Suppression d'un livre",
         text: "Voulez vous supprimer définitivement le livre ?",
         icon: "warning",
+        showCancelButton: true,
         confirmButtonText: "Supprimer",
-      }).then(function (isConfirm) {
-        if (isConfirm) {
-          console.log("suppression confirmée", form);
-          // soumission du formulaire par le code
+        cancelButtonText: "Annuler",
+      }).then(function (result) {
+        if (result.isConfirmed) {
           form.submit();
         }
       });

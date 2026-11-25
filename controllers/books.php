@@ -5,7 +5,8 @@
  */
 function list_ctrl(): void
 {
-    $books = getListBooks();
+    $booksModel = new Book();
+    $books = $booksModel->getListBooks();
     $title = 'Catalogue';
     $heading = 'Catalogue des livres';
     renderViews("books/home", compact('title', 'books', 'heading'));
@@ -21,13 +22,14 @@ function book_ctrl(): void
         http_response_code(400);
         die("Vous devez définir un paramètre id valide dans l'url");
     }
-    $book = getBook($book_id);
+    $booksModel = new Book();
+    $book = $booksModel->getBook($book_id);
     if (!$book) {
         http_response_code(404);
         die('Aucun livre trouvé avec cet id.');
     }
-    $title = $book['title'];
-    $heading = $book['title'];
+    $title = $book->title;
+    $heading = $book->title;
     renderViews("books/book", compact('title', 'book_id', 'heading', 'book'));
 }
 
@@ -36,12 +38,13 @@ function book_ctrl(): void
  */
 function delete_ctrl(): void
 {
+    $booksModel = new Book();
     $book_id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
     if (!$book_id || $book_id < 1) {
         http_response_code(400);
         die('Vous devez renseigner un id valide.');
     }
-    if (!deleteBook($book_id)) {
+    if (!$booksModel->deleteBook($book_id)) {
         http_response_code(404);
         die('Aucun livre trouvé avec cet id.');
     }
