@@ -12,17 +12,19 @@ function author_ctrl(): void
         die("Vous devez définir un paramètre id valide dans l'url");
     }
 
-    $author = getAuthor($author_id);
+    $authorModel = new Author();
+    $author = $authorModel->getAuthor($author_id);
 
     if (!$author) {
         http_response_code(404);
         die('Aucun auteur trouvé avec cet id.');
     }
 
-    $books = getBooksAuthor($author_id);
+    $booksModel = new Author();
+    $books = $booksModel->getBooksAuthor($author_id);
 
-    $title = $author['name'];
-    $heading = $author['name'];
+    $title = $author->name;
+    $heading = $author->name;
 
     renderViews("authors/author", compact('title', 'heading', 'books', 'author'));
 }
