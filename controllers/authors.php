@@ -24,5 +24,5 @@ function author_ctrl(): void
     $title = $author['name'];
     $heading = $author['name'];
 
-    renderViews("author/author", compact('title', 'heading'));
+    renderViews("authors/author", compact('title', 'heading', 'books', 'author'));
 }

@@ -28,7 +28,7 @@ function book_ctrl(): void
     }
     $title = $book['title'];
     $heading = $book['title'];
-    renderViews("books/book", compact('title', 'books', 'heading'));
+    renderViews("books/book", compact('title', 'book_id', 'heading', 'book'));
 }
 
 /**
