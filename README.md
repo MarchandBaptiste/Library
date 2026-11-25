@@ -198,3 +198,79 @@ Cette phase conserve les acquis de la V2 et fait évoluer l'application vers une
 
 ### Architecture et configuration
 - **Mise en place du modèle MVC** : séparation stricte des responsabilités entre les modèles (accès aux données), les contrôleurs (traitement des requêtes) et les vues (affichage). Le SQL ne se trouve plus que dans `models/`, le HTML uniquement dans `templates/`.
+
+### V4
+```text
+│   .gitignore
+│   index.php
+│   LA MANU_TP_POO Avancée.pdf
+│   README.md
+│   
+├───assets
+│   ├───img
+│   │       open-book.svg
+│   │       
+│   ├───js
+│   │       script.js
+│   │       
+│   └───style
+│       ├───css
+│       │       style.css
+│       │       style.css.map
+│       │       
+│       └───scss
+│           │   main.scss
+│           │   
+│           ├───abstracts
+│           │       _index.scss
+│           │       _variables.scss
+│           │       
+│           ├───bases
+│           │       _index.scss
+│           │       _reset.scss
+│           │       
+│           └───layouts
+│                   _card.scss
+│                   _general.scss
+│                   _header.scss
+│                   _index.scss
+│                   _main.scss
+│                   
+├───config
+│       constants.php
+│       
+├───controllers
+│       authors.php
+│       books.php
+│       
+├───database
+│       database.sqlite
+│       library.sql
+│       
+├───helpers
+│       db_connect.php
+│       
+├───models
+│       author.php
+│       book.php
+│       
+├───templates
+│   │   default.php
+│   │   
+│   ├───authors
+│   │       author.php
+│   │       
+│   └───books
+│           book.php
+│           home.php
+│           
+└───utils
+        viewsUtils.php
+```
+
+## V4 - Détail des améliorations apportées
+
+Cette phase conserve les acquis de la V3 et fait évoluer l'application vers une architecture buffer, sans changement fonctionnel pour l'utilisateur.
+
+### Architecture et configuration
+- **Mise en place du buffer** : Mise en place du buffer : création d'un dossier `utils/` afin de charger les différentes views, création d'un fichier `default.php` qui contient le header et le footer ainsi que la zone d'affichage dynamique. Enfin, utilisation de compact() dans l'appel de la fonction renderViews() dans les contrôleurs pour passer en paramètre les variables demandées.
