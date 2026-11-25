@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 class Author
 {
     public function __construct(
@@ -7,7 +9,6 @@ class Author
         public private(set) ?string $biography = null
     ) {}
 
-    // getAuthors(), getAuthor($id), getBooksAuthor($authorId)
     /**
      * On récupère un auteur par son id
      * @param int $id L'identifiant du l'auteur
@@ -32,5 +33,9 @@ class Author
         );
         $stmt->execute([$authorId]);
         return $stmt->fetchAll();
+    }
+    public function __call(string $method, array $args): string
+    {
+        return "la mathode $method n'existe pas";
     }
 }
