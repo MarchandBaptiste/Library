@@ -18,7 +18,7 @@
         </div>
         <div class="book-card__footer">
             <a href="index.php?page=book&id=<?= (int) $book->id ?>">En savoir plus</a>
-            <form action="index.php?page=delete" method="post">
+            <form action="index.php?page=delete" method="post" id="delete">
                 <input type="hidden" name="id" value="<?= (int) $book->id ?>">
                 <button>Supprimer</button>
             </form>
