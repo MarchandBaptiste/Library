@@ -13,6 +13,3 @@
         <?php endforeach; ?>
     </ul>
 </section>
-</body>
-
-</html>
