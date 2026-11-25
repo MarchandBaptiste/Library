@@ -5,7 +5,8 @@
  */
 function list_ctrl(): void
 {
-    $books = getListBooks();
+    $booksModel = new Book();
+    $books = $booksModel->getListBooks();
     $title = 'Catalogue';
     $heading = 'Catalogue des livres';
     renderViews("books/home", compact('title', 'books', 'heading'));
@@ -21,7 +22,8 @@ function book_ctrl(): void
         http_response_code(400);
         die("Vous devez définir un paramètre id valide dans l'url");
     }
-    $book = getBook($book_id);
+    $booksModel = new Book();
+    $book = $booksModel->getBook($book_id);
     if (!$book) {
         http_response_code(404);
         die('Aucun livre trouvé avec cet id.');
