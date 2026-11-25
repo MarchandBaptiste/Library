@@ -118,7 +118,6 @@ Lors de l'exploration de la base de code d'origine, plusieurs points bloquants p
 ### Fiabilité, gestion d'erreurs et UX
 - **Gestion des erreurs 404** : Ajout de vérifications et de réponses `404` dans `book.php`, `author.php` (contrôle de l'ID auteur) et `delete-book.php`.
 - **Sécurisation de la suppression** : Ajout d'une vérification de l'existence du livre en base avant de procéder à sa suppression dans `delete-book.php`.
-- **Tri des données** : Mise en place d'un affichage par ordre alphabétique.
 
 ### V3
 ```text
@@ -274,3 +273,21 @@ Cette phase conserve les acquis de la V3 et fait évoluer l'application vers une
 
 ### Architecture et configuration
 - **Mise en place du buffer** : Mise en place du buffer : création d'un dossier `utils/` afin de charger les différentes views, création d'un fichier `default.php` qui contient le header et le footer ainsi que la zone d'affichage dynamique. Enfin, utilisation de compact() dans l'appel de la fonction renderViews() dans les contrôleurs pour passer en paramètre les variables demandées.
+
+## V5
+
+L'arborescence reste identique à la V4 : seule l'organisation interne des modèles, des contrôleurs et des vues évolue.
+
+## V5 - Détail des améliorations apportées
+
+Cette phase conserve les acquis de la V3 (MVC) et de la V4 (buffer) et fait passer les modèles du paradigme procédural à la programmation orientée objet, sans changement fonctionnel pour l'utilisateur.
+
+### Modèles orientés objet
+- **Création des classes `Book` et `Author`** (`models/book.php`, `models/author.php`) : les anciennes fonctions deviennent des méthodes publiques.
+- **Propriétés typées** : chaque colonne de la base est représentée par une propriété nullable (`?int $id`, `?string $title`, ...) avec `private(set)`.
+- **Typage strict** : `declare(strict_types=1)` dans les deux modèles et types de retour explicites (`Book|false`, `Author|false`, `array`, `bool`).
+
+### Hydratation des données (PDO → objets)
+- **Fin des tableaux associatifs** : `fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Book::class)` et `setFetchMode(...)` + `fetch()` maintenant instances de `Book` / `Author`.
+- **Retours cohérents** : `getBook()` → `Book|false`, `getAuthor()` → `Author|false`, `getListBooks()` et `getBooksAuthor()` → tableaux d'objets `Book[]`.
+- **Templates adaptés** : `$book->title`, `$book->author_id`, `$author->biography` remplacent `$book['title']`, etc...
