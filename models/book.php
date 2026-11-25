@@ -28,14 +28,14 @@ class Book
          INNER JOIN `authors` ON `books`.`author_id` = `authors`.`id`
          ORDER BY `books`.`title` ASC'
         );
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Book::class);
     }
 
     /**
      * On récupère un livre par son id avec le nom de son auteur
      * @param int $id L'identifiant du livre
      */
-    public function getBook(int $id): array|false
+    public function getBook(int $id): Book|false
     {
         global $pdo;
         $stmt = $pdo->prepare(
@@ -45,7 +45,7 @@ class Book
          WHERE `books`.`id` = ?'
         );
         $stmt->execute([$id]);
-        return $stmt->fetch();
+        return $stmt->fetchObject(Book::class);
     }
 
     /**
